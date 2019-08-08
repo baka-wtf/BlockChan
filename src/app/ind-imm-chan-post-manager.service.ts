@@ -5,6 +5,7 @@ import { map, filter, switchMap } from 'rxjs/operators';
 import { IndImmChanPost } from './ind-imm-chan-post';
 import { IndImmChanPostModel } from './ind-imm-chan-post-model';
 import { IndImmChanThread } from './ind-imm-chan-thread';
+import { IndImmConfigService } from './ind-imm-config.service';
 
 
 @Injectable({
@@ -12,9 +13,11 @@ import { IndImmChanThread } from './ind-imm-chan-thread';
 })
 export class IndImmChanPostManagerService {
   IndImmChanPostService: IndImmChanPostService;
+  Config: IndImmConfigService
 
-  constructor(indImmChanPostService: IndImmChanPostService) {
+  constructor(indImmChanPostService: IndImmChanPostService, config: IndImmConfigService) {
     this.IndImmChanPostService = indImmChanPostService;
+    this.Config = config;
   }
 
   public async post(title: string, message: string, name: string, fileToUpload: File, board: string, parent: string) {
@@ -93,8 +96,11 @@ export class IndImmChanPostManagerService {
           postModel.Parent = post.Parent;
           if(post.IPFSHash && post.IPFSHash.length > 0) {
             imageCounter++;
-            postModel.Image = await this.getImageBlobFromIPFSHash(post.IPFSHash); 
-            postModel.CreateImageFromBlob();
+            postModel.HasImage = true;
+            if(this.Config.ShowImages) {
+              postModel.Image = await this.getImageBlobFromIPFSHash(post.IPFSHash); 
+              postModel.CreateImageFromBlob();
+            }
           }
           postModel.Timestamp = new Date(unfilteredResults[i].outcome.timestamp);
           
@@ -166,9 +172,12 @@ export class IndImmChanPostManagerService {
           postModel.Name = post.Name;
           postModel.Parent = post.Parent;
           if(post.IPFSHash && post.IPFSHash.length > 0) {
+            postModel.HasImage = true;
               if(!postModel.Parent || postModel.Parent.length === 0) {
-              postModel.Image = await this.getImageBlobFromIPFSHash(post.IPFSHash); 
-              postModel.CreateImageFromBlob();
+                if(this.Config.ShowImages) {
+                  postModel.Image = await this.getImageBlobFromIPFSHash(post.IPFSHash); 
+                  postModel.CreateImageFromBlob();
+                }
             }
           }
           postModel.Timestamp = new Date(unfilteredResults[i].outcome.timestamp);
@@ -207,8 +216,15 @@ export class IndImmChanPostManagerService {
       return retSet;
   }
 
+  public async ManualOverRideShowImage(post: IndImmChanPostModel): Promise<IndImmChanPostModel> {
+    const blob = await this.IndImmChanPostService.getFromIPFS(post.IPFSHash);    
+    post.Image = blob;
+    post.CreateImageFromBlob();
+    post.ShowImageOverride = true;
+    return post; 
+  }
   public async getImageBlobFromIPFSHash(hash: string) {
-    const result = await this.IndImmChanPostService.getFromIPFS(hash);      
+    const result = this.IndImmChanPostService.getFromIPFS(hash);      
     return result;   
   }
 }

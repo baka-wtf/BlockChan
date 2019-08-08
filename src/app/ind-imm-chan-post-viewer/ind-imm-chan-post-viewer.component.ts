@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser'
 import { ChunkingUtility } from '../chunking-utility';
+import { IndImmConfigService } from '../ind-imm-config.service';
 
 @Component({
   selector: 'app-ind-imm-chan-post-viewer',
@@ -40,7 +41,8 @@ export class IndImmChanPostViewerComponent implements OnInit {
   Sanitizer: DomSanitizer
   PostingEnabled = true;
   PostingSecondsLeftCounter = 0;
-  
+  Config: IndImmConfigService;
+
   public async blockPosting() {
     this.PostingEnabled = false;
     this.PostingSecondsLeftCounter = 60;
@@ -55,7 +57,7 @@ export class IndImmChanPostViewerComponent implements OnInit {
   }
 
   constructor(indImmChanPostManagerService: IndImmChanPostManagerService, indImmChanAddressManagerService: IndImmChanAddressManagerService,
-    route: ActivatedRoute, router: Router, toastrSrvice: ToastrService, sanitizer: DomSanitizer) {
+    route: ActivatedRoute, router: Router, toastrSrvice: ToastrService, sanitizer: DomSanitizer, config: IndImmConfigService) {
     this.IndImmChanPostManagerService = indImmChanPostManagerService;
     this.AddressManagerService = indImmChanAddressManagerService;
     this.Route = route;
@@ -63,6 +65,7 @@ export class IndImmChanPostViewerComponent implements OnInit {
     this.ToastrService = toastrSrvice;
     this.Sanitizer = sanitizer;
     this.PostingEnabled = true;
+    this.Config = config; 
   }
 
 
@@ -132,6 +135,11 @@ export class IndImmChanPostViewerComponent implements OnInit {
     this.postBoard=board;
     this.parentTx=id;
     this.refresh();
+  }
+
+  async ManualOverRideShowImage(post: IndImmChanPostModel) {
+    post.ShowFullSizeFile = false;
+    await this.IndImmChanPostManagerService.ManualOverRideShowImage(post);
   }
 
   quoteMessage(tx) {

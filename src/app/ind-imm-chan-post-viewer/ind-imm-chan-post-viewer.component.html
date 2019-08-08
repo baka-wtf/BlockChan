@@ -53,6 +53,10 @@
                         <img [src]="thread.IndImmChanPostModelParent.Base64Image" width="200px"  [hidden]="thread.IndImmChanPostModelParent.ShowFullSizeFile">
                         <img [src]="thread.IndImmChanPostModelParent.Base64Image" [hidden]="!thread.IndImmChanPostModelParent.ShowFullSizeFile">
                     </div>
+                    <div class="progress-item-container" (click)="ManualOverRideShowImage(thread.IndImmChanPostModelParent)" *ngIf="!thread.IndImmChanPostModelParent.ShowImageOverride
+                        && thread.IndImmChanPostModelParent.HasImage && !this.Config.ShowImages">
+                        <div (click)="ToggleFullSizeFile(thread.IndImmChanPostModelParent)" class="btn btn-wrapper btn-default btn-round" style="width:24%">Image Hidden by Default, Click to show.</div>
+                    </div>
                     <div class="progress-item-container">
                         <span [innerHTML]="thread.IndImmChanPostModelParent.Msg"></span>
                     </div>
@@ -82,6 +86,10 @@
                         <div class="progress-item-container" *ngIf="post.Base64Image" (click)="ToggleFullSizeFile(post)">
                             <img [src]="post.Base64Image" width="200px"  [hidden]="post.ShowFullSizeFile">
                             <img [src]="post.Base64Image" [hidden]="!post.ShowFullSizeFile">
+                        </div>
+                        <div class="progress-item-container" (click)="ManualOverRideShowImage(post)" *ngIf="!post.ShowImageOverride
+                            && post.HasImage && !this.Config.ShowImages">
+                            <div (click)="ToggleFullSizeFile(post)" class="btn btn-wrapper btn-default btn-round" style="width:24%">Image Hidden by Default, Click to show.</div>
                         </div>
                         <div class="progress-item-container">
                             <span [innerHTML]="post.Msg"></span>

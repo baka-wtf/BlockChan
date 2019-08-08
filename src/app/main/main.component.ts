@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { IndImmConfigService } from '../ind-imm-config.service';
+import {MatSlideToggle} from '@angular/material';
 
 @Component({
   selector: 'app-main',
@@ -9,9 +11,11 @@ import {Router} from '@angular/router';
 
 export class MainComponent implements OnInit {
   router: Router;
+  Config: IndImmConfigService
 
-  constructor(rtr: Router) {
+  constructor(rtr: Router, config: IndImmConfigService) {
     this.router = rtr;
+    this.Config = config;
   }
 
   public viewUpload() {

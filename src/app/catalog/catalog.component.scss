@@ -23,6 +23,9 @@
     padding:10px;
     margin:10px;
  }
+ img {
+   max-height: 300px;
+ }
  .progress-item-container{
     background-color: rgba(16, 16, 16, 0.85);
     border-radius: 12px;
@@ -31,6 +34,9 @@
     text-align: center;
  }
  
+ .click-show {
+    font-size: 10px;
+ }
  .toggle-margin{
     margin:5px;
  }

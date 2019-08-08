@@ -42,8 +42,12 @@
                         <div class="progress-item-container">
                             Images: {{  thread.ImageReplies }} |&nbsp; Replies: {{  thread.TotalReplies }}
                         </div>
-                        <div class="progress-item-container">
+                        <div class="progress-item-container" *ngIf="thread.IndImmChanPostModelParent.Base64Image">
                             <img [src]=" thread.IndImmChanPostModelParent.Base64Image" width="150px">
+                        </div>
+                        <div class="progress-item-container" (click)="ManualOverRideShowImage(thread.IndImmChanPostModelParent)" *ngIf="!thread.IndImmChanPostModelParent.ShowImageOverride
+                            && thread.IndImmChanPostModelParent.HasImage && !this.Config.ShowImages">
+                            <div (click)="ToggleFullSizeFile(thread.IndImmChanPostModelParent)" class="btn btn-wrapper btn-primary btn-round click-show">Show Image Preview</div>
                         </div>
                         <div class="progress-item-container">
                             Last: {{  thread.LastCommentTime | date:'medium' }}

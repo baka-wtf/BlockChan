@@ -5,6 +5,7 @@ export class IndImmChanPostModel extends IndImmChanPost{
     Timestamp: Date;
     Image: Blob;
     HasImage: boolean;
+    ShowImageOverride: boolean = false;
     Base64Image: any;
     Tx: string;
     IsOrganized = false;

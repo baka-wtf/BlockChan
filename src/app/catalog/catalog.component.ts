@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import {Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ChunkingUtility } from '../chunking-utility';
+import { IndImmConfigService } from '../ind-imm-config.service';
 
 @Component({
   selector: 'app-catalog',
@@ -22,6 +23,7 @@ export class CatalogComponent implements OnInit {
   IndImmChanPostManagerService: IndImmChanPostManagerService;
   Route: ActivatedRoute
   ToastrService: ToastrService;
+  Config: IndImmConfigService
 
   postTitle = '';
   postMessage = '';
@@ -39,12 +41,14 @@ export class CatalogComponent implements OnInit {
   PostingSecondsLeftCounter = 0;
   
   constructor(indImmChanPostManagerService: IndImmChanPostManagerService, indImmChanAddressManagerService: IndImmChanAddressManagerService,
-    route: ActivatedRoute, router:Router, toasterService: ToastrService) {
-    this.Route = route;
-    this.IndImmChanPostManagerService = indImmChanPostManagerService;
-    this.AddressManagerService = indImmChanAddressManagerService;
-    this.Router = router;
-    this.ToastrService = toasterService;
+    route: ActivatedRoute, router:Router, toasterService: ToastrService,   config: IndImmConfigService
+    ) {
+      this.Config = config;
+      this.Route = route;
+      this.IndImmChanPostManagerService = indImmChanPostManagerService;
+      this.AddressManagerService = indImmChanAddressManagerService;
+      this.Router = router;
+      this.ToastrService = toasterService;
     }
   
 
@@ -135,6 +139,12 @@ export class CatalogComponent implements OnInit {
     this.postBoard = this.Route.snapshot.params['board'];
     this.refresh();
   }
+
+  async ManualOverRideShowImage(post: IndImmChanPostModel) {
+    post.ShowFullSizeFile = false;
+    await this.IndImmChanPostManagerService.ManualOverRideShowImage(post);
+  }
+
 
   compare( a: IndImmChanThread, b:IndImmChanThread ) {
     if ( a.LastCommentTime < b.LastCommentTime ){

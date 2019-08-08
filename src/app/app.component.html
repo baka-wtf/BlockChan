@@ -17,7 +17,20 @@
                             <a><li (click)="viewBoards()">View Board List</li></a>
                             <a><li class="secure-highlight" (click)="viewSecure()">Post Anonymously</li></a>
                             <li><a href="mailto:IndImmFS@protonmail.com">Contact</a></li>
-                        </ul>  
+                        </ul> 
+                        <br>
+                        <div class="">          
+                            <div  class="toggle-container">
+                                <mat-slide-toggle
+                                class=""
+                                color="green"
+                                [(ngModel)]="this.Config.ShowImages"
+                                (change)="toggle()"
+                                >
+                                Download Images
+                                </mat-slide-toggle>
+                            </div>
+                        </div>  
                     </div><!--/.nav-collapse -->
                 </div><!--/.container-fluid -->
             </nav>
@@ -37,7 +50,20 @@
                         <a><li (click)="viewBoards()">View Board List</li></a>
                         <a><li class="secure-highlight" (click)="viewSecure()">Post Anonymously</li></a>
                         <li><a href="mailto:IndImmFS@protonmail.com">Contact</a></li>
-                    </ul>                  
+                    </ul>  
+                    <br>
+                    <div class="">          
+                        <div  class="toggle-container">
+                            <mat-slide-toggle
+                            class=""
+                            color="green"
+                            [(ngModel)]="this.Config.ShowImages"
+                            (change)="toggle()"
+                            >
+                            Download Images
+                            </mat-slide-toggle>
+                        </div>
+                    </div>     
                     <div class="margin-block"></div>
                     <div class="menu-social">
                       <ul class="list-inline text-center">

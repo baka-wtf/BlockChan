@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IndImmConfigService } from './ind-imm-config.service';
 
 
 @Component({
@@ -13,12 +14,18 @@ export class AppComponent {
   title = 'BlockChan';
   router: Router;
   toaster: ToastrService;
+  Config: IndImmConfigService;
+  ShowImages: false;
 
-  constructor(rtr: Router, tstr: ToastrService) {
+  constructor(rtr: Router, tstr: ToastrService, config: IndImmConfigService) {
     this.router = rtr;
     this.toaster = tstr;
+    this.Config = config;
   }
 
+  toggle() {
+    this.toaster.warning('Showing Images Set to ' + this.Config.ShowImages + '. Please hit refresh button for view to update.', 'Images Toggled');
+  }
   public viewMain() {
     this.router.navigate(['/main']);
   }
