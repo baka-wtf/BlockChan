@@ -1,8 +1,8 @@
-# Run IndImmChan Locally
+# Run BlockChan Locally
 
     This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
 
-    Clone this repo: https://github.com/ndm-inf/IndImmChan.git
+    Clone this repo: https://github.com/ndm-inf/BlockChan.git
 
     Install Angular CLI: npm install -g @angular/cli
 
