@@ -1,3 +1,6 @@
+# This an attempt to improve the BlockChan UI
+  All credit to [ndm-inf](https://github.com/ndm-inf/BlockChan).
+
 # Run BlockChan Locally
 
     This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
